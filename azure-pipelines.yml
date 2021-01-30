@@ -17,7 +17,7 @@ steps:
   displayName: Test the repository structure
 
 - script: |
-    uname -a 
-    cd
-    ls
-  displayName: Multiline script [test]
+    sudo -y apt install pdflatex
+    whereis pdflatex
+    pdflatex
+  displayName: Installing pdflatex
