@@ -1,0 +1,34 @@
+\documentclass{book}
+\usepackage[utf8]{inputenc}
+
+%additional packages
+\usepackage{import}
+\usepackage{authblk}
+\usepackage{amsmath}
+\usepackage{lipsum}
+\usepackage{hyperref}
+
+\begin{document}
+
+\frontmatter
+\import{include/}{0-Title.tex}
+\clearpage
+\thispagestyle{empty}
+\tableofcontents
+
+\mainmatter
+
+% Book Abstract
+\import{include/}{1-Abstract.tex}
+
+% Introduction
+\import{content/}{Introduction.tex}
+
+% Chapter-1
+\import{content/}{Chapter-1.tex}
+
+% Chapter-2
+\import{content/}{Chapter-2.tex}
+
+
+\end{document}
