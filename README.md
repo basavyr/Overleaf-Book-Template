@@ -1,4 +1,4 @@
-[![Build Status](https://dev.azure.com/robertpoenaru/Latex-CI-CD/_apis/build/status/basavyr.Overleaf-Book-Template?branchName=main)](https://dev.azure.com/robertpoenaru/Latex-CI-CD/_build/latest?definitionId=4&branchName=main)
+![](https://dev.azure.com/robertpoenaru/Latex-CI-CD/_apis/build/status/basavyr.Overleaf-Book-Template?branchName=main)
 
 # Overleaf Book Template [CI/CD]
 
