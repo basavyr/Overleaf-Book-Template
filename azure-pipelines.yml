@@ -17,7 +17,6 @@ steps:
   displayName: Test the repository structure
 
 - script: |
-    sudo -y apt-get install texlive-latex-recommended
-    whereis pdflatex
+    sudo apt-get install -y texlive-latex-recommended
     pdflatex
   displayName: Installing pdflatex
