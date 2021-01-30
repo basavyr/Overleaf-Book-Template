@@ -1,24 +1,34 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+variables:
+  latex-pdf-file: latex-pdf-file
 
-trigger:
-- main
+jobs:
+- job: latex
+  displayName: Generate `.pdf` from latex file 
+  pool:
+    vmImage: 'ubuntu-18.04'
 
-pool:
-  vmImage: 'ubuntu-18.04'
+  steps:
+  - script: uname -a
+    displayName: Test the system integrity
 
-steps:
-- script: uname -a
-  displayName: Test the system integrity
+  - script: ls -la
+    displayName: Test the repository structure
 
-- script: ls -la
-  displayName: Test the repository structure
+  - script: sudo apt-get install -y texlive-latex-recommended
+    displayName: Install pdflatex on the VM
+  
+  - script: |
+      ls
+      pdflatex sample.tex
+      ls
+    displayName: Compile the latex sample file
+  
+  - script: |
+      cp sample.pdf /tmp
+      cd /tmp
+      ls -la
+    displayName: Compile the latex sample file
 
-- script: |
-    sudo apt-get install -y texlive-latex-recommended
-    ls
-    pdflatex sample.tex
-    ls
-  displayName: Installing pdflatex
+  - publish: /tmp/sample.pdf
+    artifact: $(latex-pdf-file)
+
