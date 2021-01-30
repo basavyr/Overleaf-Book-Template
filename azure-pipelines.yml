@@ -18,5 +18,6 @@ steps:
 
 - script: |
     sudo apt-get install -y texlive-latex-recommended
-    pdflatex
+    ls
+    pdflatex sample.tex
   displayName: Installing pdflatex
