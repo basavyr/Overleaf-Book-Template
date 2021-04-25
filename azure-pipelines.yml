@@ -27,8 +27,8 @@ jobs:
       sudo apt update
     displayName: Test the system's integrity
 
-  - script: sudo apt-get install -y texlive-full
-    displayName: Install `pdflatex` on the VM
+  - script: sudo apt-get install -y texlive-latex-extra 
+    displayName: Install `pdflatex-extra` on the VM
   
   - script: |
       pdflatex main.tex
