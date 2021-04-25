@@ -1,42 +1,38 @@
 # trigger:
 # - main
 
-parameters:
-- name: pool_image
-  displayName: Pool Images
-  type: string
-  default: ubuntu-latest
-  values:
-  - ubuntu-latest
-  - macOS-latest
+# parameters:
+# - name: pool_image
+#   displayName: Pool Images
+#   type: string
+#   default: ubuntu-latest
+#   values:
+#   - ubuntu-latest
+#   - macOS-latest
 
 
 variables:
   latex-pdf-file: latex_book
+  os-mac: macOS-latest
+  os-linux: ubuntu-latest
 
 jobs:
-- job: Latex_Build
+- job: Latex_Build_Ubuntu
   displayName: Generate `.pdf` from latex file 
   pool:
-    vmImage: ${{ parameters.pool_image }}
+    vmImage: $(os-linux)
 
   steps:
   - script: |
-      uname -a
       sudo apt update
     displayName: Test the system's integrity
-
-  - script: ls -la
-    displayName: Test the repository structure
 
   - script: sudo apt-get install -y texlive-full
     displayName: Install `pdflatex` on the VM
   
   - script: |
-      ls -l
       pdflatex main.tex
       pdflatex main.tex
-      ls -l
     displayName: Compile the main latex file
   
   - script: |
@@ -45,3 +41,13 @@ jobs:
 
   - publish: /tmp/main.pdf
     artifact: $(latex-pdf-file)
+
+- job: Latex_Build_macOS
+  displayName: Test macOS
+  pool:
+    vmImage: $(os-mac)
+
+  steps:
+  - script: |
+      ls -l
+      uname -a
