@@ -31,4 +31,3 @@ jobs:
 
   - publish: /tmp/sample.pdf
     artifact: $(latex-pdf-file)
-
