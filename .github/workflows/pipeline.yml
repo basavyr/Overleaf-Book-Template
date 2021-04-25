@@ -1,20 +1,43 @@
 name: CI
 
-# Run this workflow every time a commit is pushed to main or a pull request is opened against main
 on:
-push:
+  push:
     branches: [ main ]
-pull_request:
+  pull_request:
     branches: [ main ]
 
+
 jobs:
-    build:
-        name: Call Azure Pipeline
-        runs-on: ubuntu-latest
-        steps:
-        - name: Azure Pipelines Action
-          uses: Azure/pipelines@v1
-          with:
-            azure-devops-project-url: https://dev.azure.com/robertpoenaru/Latex-CI-CD
-            azure-pipeline-name: 'book-building'
-            azure-devops-token: ${{ secrets.AZURE_DEVOPS_TOKEN }}
+  # This workflow contains a single job called "build"
+  build-1:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          ls
+          ls -l
+  build-2:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          ls
+          ls -l
+          cd
+          ls -l
