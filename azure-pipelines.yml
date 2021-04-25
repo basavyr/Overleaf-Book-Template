@@ -51,3 +51,6 @@ jobs:
   - script: |
       ls -l
       uname -a
+      brew update
+      brew upgrade
+      brew install texlive-latex-extra 

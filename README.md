@@ -1,4 +1,4 @@
-[![Build Status](https://dev.azure.com/robertpoenaru/Overleaf-Book-Template/_apis/build/status/basavyr.Overleaf-Book-Template?branchName=main)](https://dev.azure.com/robertpoenaru/Overleaf-Book-Template/_build/latest?definitionId=6&branchName=main)
+[![CI](https://github.com/basavyr/Overleaf-Book-Template/actions/workflows/pipeline.yml/badge.svg)](https://github.com/basavyr/Overleaf-Book-Template/actions/workflows/pipeline.yml)
 
 # Overleaf Book Template [CI/CD]
 
