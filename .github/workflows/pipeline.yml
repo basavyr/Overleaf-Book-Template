@@ -11,25 +11,31 @@ jobs:
   github-make-release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+        
       - name: Test VM functionality
         run: uname -a
-      # - name: Update VM
-      #   run: |
-      #     sudo apt update
-      # - name: Install latex
-      #   run: |
-      #     sudo apt-get install -y texlive-latex-extra 
-      # - name: Compile latex book
-      #   run: |
-      #     ls -l
-      #     pdflatex main.tex
-      #     ls -l
-      # - name: Create artifact from the compiled pdf book
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: latex-book
-      #     path: ./main.pdf
+      
+      - name: Update VM
+        run: |
+          sudo apt update
+      
+      - name: Install latex
+        run: |
+          sudo apt-get install -y texlive-latex-extra 
+      
+      - name: Compile latex book
+        run: |
+          ls -l
+          pdflatex main.tex
+          ls -l
+
+      - name: Create artifact from the compiled pdf book
+        uses: actions/upload-artifact@v2
+        with:
+          name: latex-book
+          path: ./main.pdf
 
       - name: Release
         uses: "marvinpinto/action-automatic-releases@latest"
@@ -37,9 +43,9 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: true
-          title: "Development Build"
+          title: "Latex-Book Development Build"
           files: |
-            CHANGELOG.md
+            main.pdf
 
   # azure-pipeline-deploy:
   #   runs-on: ubuntu-latest
