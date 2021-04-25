@@ -5,7 +5,7 @@ variables:
   latex-pdf-file: latex-pdf-file
 
 jobs:
-- job: Latex Build
+- job: Latex_Build
   displayName: Generate `.pdf` from latex file 
   pool:
     vmImage: 'ubuntu-18.04'
