@@ -17,7 +17,19 @@ jobs:
       - name: Update VM
         run: |
           sudo apt update
-          which python
+      - name: Install latex
+        run: |
+          sudo apt-get install -y texlive-full
+      - name: Compile latex book
+        run: |
+          ls -l
+          pdflatex main.pdf
+          ls -l
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: latex-book
+          path: ./main.pdf
   # azure-pipeline-deploy:
   #   runs-on: ubuntu-latest
   #   steps:
