@@ -30,6 +30,15 @@ jobs:
         with:
           name: latex-book
           path: ./main.pdf
+
+      - name: Create release | Deliver log-file
+        uses: softprops/action-gh-release@v1
+        id: create_release
+        if: startsWith(github.ref, 'refs/heads/')
+        with:
+          body_path: CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   # azure-pipeline-deploy:
   #   runs-on: ubuntu-latest
   #   steps:
