@@ -24,6 +24,6 @@ jobs:
       - name: Azure Pipelines Action
         uses: Azure/pipelines@v1
         with:
-          azure-devops-project-url: https://dev.azure.com/robertpoenaru/Latex-CI-CD
-          azure-pipeline-name: 'GitHub-DevOps'
+          azure-devops-project-url: https://dev.azure.com/basavyr/Overleaf-Book-Template
+          azure-pipeline-name: 'basavyr.Overleaf-Book-Template'
           azure-devops-token: ${{ secrets.AZURE_DEVOPS_TOKEN }}
