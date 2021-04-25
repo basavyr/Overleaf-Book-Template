@@ -54,8 +54,8 @@ jobs:
       brew update
       brew upgrade
       brew install texlive
-      pdf latex main.pdf
-      pdf latex main.pdf
+      pdflatex main.tex
+      pdflatex main.tex
       ls
 
   - publish: main.pdf
