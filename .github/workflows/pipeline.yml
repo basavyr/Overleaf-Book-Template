@@ -19,13 +19,13 @@ jobs:
           sudo apt update
       - name: Install latex
         run: |
-          sudo apt-get install -y texlive-full
+          sudo apt-get install -y texlive-latex-recommended
       - name: Compile latex book
         run: |
           ls -l
-          pdflatex main.pdf
+          pdflatex main.tex
           ls -l
-      - name: Archive code coverage results
+      - name: Create artifact from the compiled pdf book
         uses: actions/upload-artifact@v2
         with:
           name: latex-book
