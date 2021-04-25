@@ -1,14 +1,24 @@
 # trigger:
 # - main
 
+parameters:
+- name: pool_image
+  displayName: Pool Images
+  type: string
+  default: ubuntu-latest
+  values:
+  - ubuntu-latest
+  - macOS-latest
+
+
 variables:
-  latex-pdf-file: latex-pdf-file
+  latex-pdf-file: latex_book
 
 jobs:
 - job: Latex_Build
   displayName: Generate `.pdf` from latex file 
   pool:
-    vmImage: 'ubuntu-latest'
+    vmImage: ${{ parameters.pool_image }}
 
   steps:
   - script: |
@@ -27,13 +37,11 @@ jobs:
       pdflatex main.tex
       pdflatex main.tex
       ls -l
-    displayName: Compile the latex sample file
+    displayName: Compile the main latex file
   
-  # - script: |
-  #     cp sample.pdf /tmp
-  #     cd /tmp
-  #     ls -la
-  #   displayName: Compile the latex sample file
+  - script: |
+      cp main.pdf /tmp
+    displayName: Compile the latex main file
 
-  # - publish: /tmp/sample.pdf
-  #   artifact: $(latex-pdf-file)
+  - publish: /tmp/main.pdf
+    artifact: $(latex-pdf-file)
