@@ -53,4 +53,10 @@ jobs:
       uname -a
       brew update
       brew upgrade
-      brew install texlive-latex-extra 
+      brew install texlive
+      pdf latex main.pdf
+      pdf latex main.pdf
+      ls
+
+  - publish: main.pdf
+    artifact: $(latex-pdf-file)
