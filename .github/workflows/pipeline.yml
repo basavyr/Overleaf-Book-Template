@@ -8,31 +8,30 @@ on:
 
 
 jobs:
-  linux-build:
-    runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, 'skip-action')" #https://github.com/marketplace/actions/skip-based-on-commit-message
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-      - name: Update OS and install latex packages [texlive,biber]
-        run: |
-          uname -a
-          sudo apt update
-          sudo apt-get install -y texlive-latex-extra 
-          sudo apt install biber
-      - name: Compile latex project with pdflatex
-        run: |
-          ls -l
-          pdflatex main.tex
-          biber main.bcf
-          pdflatex main.tex
-          pdflatex main.tex
-          ls -l
-      - name: Create artifact from the compiled pdf book
-        uses: actions/upload-artifact@v2
-        with:
-          name: latex-book-linux
-          path: ./main.pdf
+  # linux-build:
+  #   runs-on: ubuntu-latest
+  #   if: "!contains(github.event.head_commit.message, 'skip-action')" #https://github.com/marketplace/actions/skip-based-on-commit-message
+  #   steps:
+  #     - name: Checkout repo
+  #       uses: actions/checkout@v2
+  #     - name: Update OS and install latex packages [texlive,biber]
+  #       run: |
+  #         uname -a
+  #         sudo apt update
+  #         sudo apt-get install -y texlive-latex-extra 
+  #         sudo apt install biber
+  #     - name: Compile latex project with pdflatex
+  #       run: |
+  #         pdflatex main.tex
+  #         biber main.bcf
+  #         pdflatex main.tex
+  #         pdflatex main.tex
+  #         ls -l
+  #     - name: Create artifact from the compiled pdf book
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: latex-book-linux
+  #         path: ./main.pdf
   
   macos-build:
     runs-on: macos-latest
@@ -50,6 +49,13 @@ jobs:
           tlmgr update --all
           tlmgr install biber
           tlmgr install biblatex
+      - name: Compile latex project with xelatex
+        run: |
+          xelatex main.tex
+          biber main.bcf
+          xelatex main.tex
+          xelatex main.tex
+          ls -la
 
   
   # book-release:
