@@ -53,7 +53,8 @@ jobs:
       echo brew upgrade
       brew install --cask mactex
       eval "$(/usr/libexec/path_helper)"
-      pdftex main.tex
+      xelatex main.tex
+      ls
 
   - publish: main.pdf
     artifact: $(latex-pdf-file)
