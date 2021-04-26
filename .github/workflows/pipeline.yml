@@ -41,7 +41,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Install packages [mactex]
         run: |
-          brew install --cask mactex
+          brew install --cask mactex-no-gui
           eval "$(/usr/libexec/path_helper)"
       - name: test tlmgr command
         run: |
@@ -55,7 +55,15 @@ jobs:
           biber main.bcf
           xelatex main.tex
           xelatex main.tex
-          ls -la
+          ls -l
+      - name: Download artifact from Ubuntu build
+        uses: actions/download-artifact@master
+        with:
+          name: latex-book-linux
+          path: ./latex-book-linux.pdf
+      - name: Check for artifact download
+        run: |
+          ls -l
 
   
   # book-release:
