@@ -17,30 +17,30 @@ variables:
   os-linux: ubuntu-latest
 
 jobs:
-- job: Latex_Build_Ubuntu
-  displayName: Generate `.pdf` from latex file 
-  pool:
-    vmImage: $(os-linux)
+# - job: Latex_Build_Ubuntu
+#   displayName: Generate `.pdf` from latex file 
+#   pool:
+#     vmImage: $(os-linux)
 
-  steps:
-  - script: |
-      sudo apt update
-    displayName: Test the system's integrity
+#   steps:
+#   - script: |
+#       sudo apt update
+#     displayName: Test the system's integrity
 
-  - script: sudo apt-get install -y texlive-latex-extra 
-    displayName: Install `pdflatex-extra` on the VM
+#   - script: sudo apt-get install -y texlive-latex-extra 
+#     displayName: Install `pdflatex-extra` on the VM
   
-  - script: |
-      pdflatex main.tex
-      pdflatex main.tex
-    displayName: Compile the main latex file
+#   - script: |
+#       pdflatex main.tex
+#       pdflatex main.tex
+#     displayName: Compile the main latex file
   
-  - script: |
-      cp main.pdf /tmp
-    displayName: Compile the latex main file
+#   - script: |
+#       cp main.pdf /tmp
+#     displayName: Compile the latex main file
 
-  - publish: /tmp/main.pdf
-    artifact: $(latex-pdf-file)
+#   - publish: /tmp/main.pdf
+#     artifact: $(latex-pdf-file)
 
 - job: Latex_Build_macOS
   displayName: Test macOS
@@ -53,7 +53,11 @@ jobs:
       uname -a
       brew update
       brew upgrade
-      brew install texlive
+      brew install --cask basictex
+      pdflatex --help
+      xelatex --help
+      xelatex main.tex
+      xelatex main.tex
       pdflatex main.tex
       pdflatex main.tex
       ls
