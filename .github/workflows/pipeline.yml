@@ -8,23 +8,18 @@ on:
 
 
 jobs:
-  github-make-release:
+  linux-build:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip-action')" #https://github.com/marketplace/actions/skip-based-on-commit-message
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-
-      - name: Test VM functionality + updates
+      - name: Update OS and install latex packages [texlive,biber]
         run: |
           uname -a
           sudo apt update
-      
-      - name: Install latex
-        run: |
           sudo apt-get install -y texlive-latex-extra 
           sudo apt install biber
-      
       - name: Compile latex project with pdflatex
         run: |
           ls -l
@@ -33,23 +28,48 @@ jobs:
           pdflatex main.tex
           pdflatex main.tex
           ls -l
-
       - name: Create artifact from the compiled pdf book
         uses: actions/upload-artifact@v2
         with:
-          name: latex-book
+          name: latex-book-linux
           path: ./main.pdf
+  
+  macos-build:
+    runs-on: macos-latest
+    if: "!contains(github.event.head_commit.message, 'skip-action')" #https://github.com/marketplace/actions/skip-based-on-commit-message
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Install packages [mactex]
+        run: |
+          brew install --cask mactex
+          eval "$(/usr/libexec/path_helper)"
+      - name: test tlmgr command
+        run: |
+          tlmgr --help
+          tlmgr update --all
+          tlmgr install biber
+          tlmgr install biblatex
 
-      - name: Create release with artifact
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: true
-          title: "Latex-Book"
-          files: |
-            CHANGELOG.md
-            main.pdf
+  
+  # book-release:
+  #   runs-on: ubuntu-latest
+  #   if: "!contains(github.event.head_commit.message, 'skip-action')" #https://github.com/marketplace/actions/skip-based-on-commit-message
+  #   steps:
+  #     - name: Checkout repo
+  #       uses: actions/checkout@v2
+
+
+  #     - name: Create release with artifact
+  #       uses: "marvinpinto/action-automatic-releases@latest"
+  #       with:
+  #         repo_token: "${{ secrets.GITHUB_TOKEN }}"
+  #         automatic_release_tag: "latest"
+  #         prerelease: true
+  #         title: "Latex-Book"
+  #         files: |
+  #           CHANGELOG.md
+  #           main.pdf
 
   # azure-pipeline-deploy:
   #   runs-on: ubuntu-latest
