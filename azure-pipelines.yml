@@ -51,15 +51,9 @@ jobs:
   - script: |
       echo brew update
       echo brew upgrade
-      brew install --cask basictex
+      brew install --cask mactex
       eval "$(/usr/libexec/path_helper)"
-      pdflatex --help
-      xelatex --help
-      xelatex main.tex
-      xelatex main.tex
-      pdflatex main.tex
-      pdflatex main.tex
-      ls
+      pdftex main.tex
 
   - publish: main.pdf
     artifact: $(latex-pdf-file)
