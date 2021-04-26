@@ -8,82 +8,72 @@ on:
 
 
 jobs:
-  # linux-build:
-  #   runs-on: ubuntu-latest
-  #   if: "!contains(github.event.head_commit.message, 'skip-action')" #https://github.com/marketplace/actions/skip-based-on-commit-message
-  #   steps:
-  #     - name: Checkout repo
-  #       uses: actions/checkout@v2
-  #     - name: Update OS and install latex packages [texlive,biber]
-  #       run: |
-  #         uname -a
-  #         sudo apt update
-  #         sudo apt-get install -y texlive-latex-extra 
-  #         sudo apt install biber
-  #     - name: Compile latex project with pdflatex
-  #       run: |
-  #         pdflatex main.tex
-  #         biber main.bcf
-  #         pdflatex main.tex
-  #         pdflatex main.tex
-  #         ls -l
-  #     - name: Create artifact from the compiled pdf book
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: latex-book-linux
-  #         path: ./main.pdf
-  
-  macos-build:
-    runs-on: macos-latest
+  linux-build:
+    runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip-action')" #https://github.com/marketplace/actions/skip-based-on-commit-message
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
-      - name: Install packages [mactex]
+      - name: Update OS and install latex packages [texlive,biber]
         run: |
-          brew install --cask mactex-no-gui
-          eval "$(/usr/libexec/path_helper)"
-      - name: test tlmgr command
+          uname -a
+          sudo apt update
+          sudo apt-get install -y texlive-latex-extra 
+          sudo apt install biber
+      - name: Compile latex project with pdflatex
         run: |
-          tlmgr --help
-          tlmgr update --all
-          tlmgr install biber
-          tlmgr install biblatex
-      - name: Compile latex project with xelatex
-        run: |
-          xelatex main.tex
+          pdflatex main.tex
           biber main.bcf
-          xelatex main.tex
-          xelatex main.tex
+          pdflatex main.tex
+          pdflatex main.tex
           ls -l
-      - name: Download artifact from Ubuntu build
-        uses: actions/download-artifact@master
+      - name: Create artifact from the compiled pdf book
+        uses: actions/upload-artifact@v2
         with:
           name: latex-book-linux
-          path: ./latex-book-linux.pdf
-      - name: Check for artifact download
-        run: |
-          ls -l
-
+          path: ./main.pdf
+      - name: Create release with artifact
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Latex-Book"
+          files: |
+            main.pdf
   
-  # book-release:
-  #   runs-on: ubuntu-latest
+  # macos-build:
+  #   runs-on: macos-latest
   #   if: "!contains(github.event.head_commit.message, 'skip-action')" #https://github.com/marketplace/actions/skip-based-on-commit-message
   #   steps:
   #     - name: Checkout repo
   #       uses: actions/checkout@v2
-
-
-  #     - name: Create release with artifact
-  #       uses: "marvinpinto/action-automatic-releases@latest"
+  #     - name: Install packages [mactex]
+  #       run: |
+  #         brew install --cask mactex-no-gui
+  #         eval "$(/usr/libexec/path_helper)"
+  #     - name: test tlmgr command
+  #       run: |
+  #         tlmgr --help
+  #         tlmgr update --all
+  #         tlmgr install biber
+  #         tlmgr install biblatex
+  #     - name: Compile latex project with xelatex
+  #       run: |
+  #         xelatex main.tex
+  #         biber main.bcf
+  #         xelatex main.tex
+  #         xelatex main.tex
+  #         ls -l
+  #     - name: Download artifact from Ubuntu build
+  #       uses: actions/download-artifact@master
   #       with:
-  #         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-  #         automatic_release_tag: "latest"
-  #         prerelease: true
-  #         title: "Latex-Book"
-  #         files: |
-  #           CHANGELOG.md
-  #           main.pdf
+  #         name: latex-book-linux
+  #         path: ./latex-book-linux.pdf
+  #     - name: Check for artifact download
+  #       run: |
+  #         ls -l
+
 
   # azure-pipeline-deploy:
   #   runs-on: ubuntu-latest
