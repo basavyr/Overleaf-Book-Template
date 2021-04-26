@@ -28,7 +28,7 @@ jobs:
         run: |
           ls -l
           pdflatex main.tex
-          bibtex main.aux
+          biber main.bcf
           pdflatex main.tex
           pdflatex main.tex
           ls -l
