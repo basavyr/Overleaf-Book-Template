@@ -23,6 +23,7 @@ jobs:
       - name: Install latex
         run: |
           sudo apt-get install -y texlive-latex-extra 
+          sudo apt install biber
       
       - name: Compile latex project with pdflatex
         run: |
