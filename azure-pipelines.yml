@@ -11,7 +11,8 @@
 #   - macOS-latest
 
 variables:
-  latex-pdf-file: latex_book
+  latex-linux: book_linux
+  latex-macos: book_macos
   os-mac: macOS-latest
   os-linux: ubuntu-latest
 
@@ -30,14 +31,10 @@ jobs:
   - script: |
       pdflatex main.tex
       pdflatex main.tex
-    displayName: Compile the main latex file
-  
-  - script: |
-      cp main.pdf /tmp
-    displayName: Copy the obtained pdf file to /tmp
+    displayName: Compile the main latex file with pdflatex
 
-  - publish: /tmp/main.pdf
-    artifact: $(latex-pdf-file)
+  - publish: main.pdf
+    artifact: $(latex-linux)
 
 - job: Latex_Build_macOS
   displayName: Build latex project on macOS
@@ -52,4 +49,4 @@ jobs:
     displayName: Install mactex and build project with xelatex
 
   - publish: main.pdf
-    artifact: $(latex-pdf-file)
+    artifact: $(latex-macos)

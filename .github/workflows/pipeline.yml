@@ -10,7 +10,7 @@ on:
 jobs:
   github-make-release:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, 'skip-action')"
+    if: "!contains(github.event.head_commit.message, 'skip-action')" #https://github.com/marketplace/actions/skip-based-on-commit-message
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
