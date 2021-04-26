@@ -30,7 +30,10 @@ jobs:
   
   - script: |
       pdflatex main.tex
+      bibtex main.aux
       pdflatex main.tex
+      pdflatex main.tex
+      ls -l
     displayName: Compile the main latex file with pdflatex
 
   - publish: main.pdf
@@ -45,8 +48,16 @@ jobs:
   - script: |
       brew install --cask mactex
       eval "$(/usr/libexec/path_helper)"
+    displayName: Install mactex
+  
+  - script: |
+      ls -l
       xelatex main.tex
-    displayName: Install mactex and build project with xelatex
+      bibtex main.aux
+      xelatex main.tex
+      xelatex main.tex
+      ls -l
+    displayName: Build project with xelatex
 
   - publish: main.pdf
     artifact: $(latex-macos)

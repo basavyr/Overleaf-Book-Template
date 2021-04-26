@@ -9,6 +9,8 @@
 \usepackage{hyperref}
 \usepackage[a4paper, margin=1in]{geometry}
 \usepackage{graphicx}
+\usepackage[backend=bibtex,sorting=none]{biblatex}
+\addbibresource{./references.bib}
 
 \begin{document}
 
@@ -35,7 +37,8 @@
 % Chapter-3
 \import{content/}{Chapter-3.tex}
 
-\bibliographystyle{unsrt}
-\bibliography{references}
+%\bibliographystyle{unsrt}
+%\bibliography{./references.bib}
+\printbibliography
 
 \end{document}
