@@ -49,11 +49,10 @@ jobs:
 
   steps:
   - script: |
-      ls -l
-      uname -a
-      brew update
-      brew upgrade
+      echo brew update
+      echo brew upgrade
       brew install --cask basictex
+      eval "$(/usr/libexec/path_helper)"
       pdflatex --help
       xelatex --help
       xelatex main.tex
