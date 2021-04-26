@@ -26,45 +26,45 @@ jobs:
   - script: |
       sudo apt update
       sudo apt-get install -y texlive-latex-extra 
-    displayName: Update system + install latex package
+      sudo apt install biber
+    displayName: Update system + install latex packages [texlive-extra,biber]
   
   - script: |
       pdflatex main.tex
-      bibtex main.aux
+      biber main.bcf
       pdflatex main.tex
       pdflatex main.tex
-      ls -l
     displayName: Compile the main latex file with pdflatex
 
   - publish: main.pdf
     artifact: $(latex-linux)
 
-- job: Latex_Build_macOS
-  displayName: Build latex project on macOS
-  pool:
-    vmImage: $(os-mac)
+# - job: Latex_Build_macOS
+#   displayName: Build latex project on macOS
+#   pool:
+#     vmImage: $(os-mac)
 
-  steps:
-  - script: |
-      brew install --cask mactex
-      eval "$(/usr/libexec/path_helper)"
-    displayName: Install mactex
+#   steps:
+#   - script: |
+#       brew install --cask mactex
+#       eval "$(/usr/libexec/path_helper)"
+#     displayName: Install mactex
   
-  - script: |
-      tlmgr --help
-      tlmgr update --all
-      tlmgr install biber
-      tlmgr install biblatex
-    displayName: test tlmgr service
+#   - script: |
+#       tlmgr --help
+#       tlmgr update --all
+#       tlmgr install biber
+#       tlmgr install biblatex
+#     displayName: test tlmgr service
   
-  - script: |
-      ls -l
-      xelatex main.tex
-      biber main.bcf
-      xelatex main.tex
-      xelatex main.tex
-      ls -l
-    displayName: Build project with xelatex
+#   - script: |
+#       ls -l
+#       xelatex main.tex
+#       biber main.bcf
+#       xelatex main.tex
+#       xelatex main.tex
+#       ls -l
+#     displayName: Build project with xelatex
 
-  - publish: main.pdf
-    artifact: $(latex-macos)
+#   - publish: main.pdf
+#     artifact: $(latex-macos)
