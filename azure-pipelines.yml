@@ -10,51 +10,46 @@
 #   - ubuntu-latest
 #   - macOS-latest
 
-
 variables:
   latex-pdf-file: latex_book
   os-mac: macOS-latest
   os-linux: ubuntu-latest
 
 jobs:
-# - job: Latex_Build_Ubuntu
-#   displayName: Generate `.pdf` from latex file 
-#   pool:
-#     vmImage: $(os-linux)
+- job: Latex_Build_Ubuntu
+  displayName: Build latex project on Linux
+  pool:
+    vmImage: $(os-linux)
 
-#   steps:
-#   - script: |
-#       sudo apt update
-#     displayName: Test the system's integrity
-
-#   - script: sudo apt-get install -y texlive-latex-extra 
-#     displayName: Install `pdflatex-extra` on the VM
+  steps:
+  - script: |
+      sudo apt update
+      sudo apt-get install -y texlive-latex-extra 
+    displayName: Update system + install latex package
   
-#   - script: |
-#       pdflatex main.tex
-#       pdflatex main.tex
-#     displayName: Compile the main latex file
+  - script: |
+      pdflatex main.tex
+      pdflatex main.tex
+    displayName: Compile the main latex file
   
-#   - script: |
-#       cp main.pdf /tmp
-#     displayName: Compile the latex main file
+  - script: |
+      cp main.pdf /tmp
+    displayName: Copy the obtained pdf file to /tmp
 
-#   - publish: /tmp/main.pdf
-#     artifact: $(latex-pdf-file)
+  - publish: /tmp/main.pdf
+    artifact: $(latex-pdf-file)
 
 - job: Latex_Build_macOS
-  displayName: Test macOS
+  displayName: Build latex project on macOS
   pool:
     vmImage: $(os-mac)
 
   steps:
   - script: |
-      echo brew update
-      echo brew upgrade
       brew install --cask mactex
       eval "$(/usr/libexec/path_helper)"
       xelatex main.tex
-      ls
+    displayName: Install mactex and build project with xelatex
 
   - publish: main.pdf
     artifact: $(latex-pdf-file)
